@@ -1,6 +1,7 @@
 package org.experimentalplayers.faraday.utils
 
 import android.app.Application
+import org.experimentalplayers.faraday.BuildConfig
 import timber.log.Timber
 
 class MyApplication : Application() {

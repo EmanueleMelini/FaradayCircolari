@@ -46,6 +46,9 @@ dependencies {
     implementation "androidx.work:work-runtime:$work_version"
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
+    //ANimatedBottomBar
+    implementation 'nl.joery.animatedbottombar:library:1.1.0'
+
     //KotlinAndroidUtils
     implementation 'com.github.EmanueleMelini:KotlinAndroidUtils:1.0.3'
 

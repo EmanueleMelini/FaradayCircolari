@@ -4,29 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HomeActivity">
-
-    <ImageView
-        android:id="@+id/home_image"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:contentDescription="@string/faraday"
-        android:src="@drawable/faradat_half_rounded"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/home_quote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_image" />
+    tools:context=".ui.TestActivity">
 
     <nl.joery.animatedbottombar.AnimatedBottomBar
-        android:id="@+id/home_bottom_bar"
+        android:id="@+id/test_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:abb_indicatorAppearance="round"

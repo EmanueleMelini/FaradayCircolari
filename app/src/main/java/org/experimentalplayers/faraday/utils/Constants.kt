@@ -13,3 +13,5 @@ const val USER_SHARED_IDUSER = "session_user_iduser"
 const val USER_SHARED_USERNAME = "session_user_username"
 const val USER_SHARED_PASSWORD = "session_user_password"
 const val USER_SHARED_TYPE = "session_user_type"
+
+const val FETCH_DELAY = 1000L

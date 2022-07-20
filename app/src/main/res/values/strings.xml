@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FaradayCircolari</string>
+    <string name="faraday">Faraday</string>
+    <string name="home">Home</string>
+    <string name="documents">Documenti</string>
+    <string name="history">Storico</string>
+    <string name="settings">Impostazioni</string>
+    <string name="info">Info</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

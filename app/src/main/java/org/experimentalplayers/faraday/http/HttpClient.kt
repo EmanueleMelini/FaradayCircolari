@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import getConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.experimentalplayers.faraday.BuildConfig
 import org.experimentalplayers.faraday.R
 import org.experimentalplayers.faraday.http.resp.BaseResponse
 import org.experimentalplayers.faraday.utils.MyApplication

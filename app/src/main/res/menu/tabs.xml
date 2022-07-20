@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tab_document"
+        android:icon="@drawable/documents"
+        android:title="@string/documents" />
+    <item
+        android:id="@+id/tab_history"
+        android:icon="@drawable/history"
+        android:title="@string/history" />
+    <item
+        android:id="@+id/tab_home"
+        android:icon="@drawable/home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/tab_info"
+        android:icon="@drawable/info"
+        android:title="@string/info" />
+    <item
+        android:id="@+id/tab_settings"
+        android:icon="@drawable/settings"
+        android:title="@string/settings" />
+</menu>
