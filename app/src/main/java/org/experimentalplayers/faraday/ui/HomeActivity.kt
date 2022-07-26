@@ -1,58 +1,49 @@
 package org.experimentalplayers.faraday.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
-import go
-import goNoTransaction
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import nl.joery.animatedbottombar.AnimatedBottomBar
 import org.experimentalplayers.faraday.R
-import org.experimentalplayers.faraday.service.FetchService
+import org.experimentalplayers.faraday.ui.adapter.ScreenSlidePagerAdapter
+import org.experimentalplayers.faraday.ui.fragments.*
 
 class HomeActivity : BaseActivity() {
 
-    private lateinit var quote: TextView
+    private lateinit var viewPager2: ViewPager2
     private lateinit var bottomBar: AnimatedBottomBar
-
-    //inner class
+    private lateinit var list: ArrayList<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         myContentView = R.layout.activity_home
         super.onCreate(savedInstanceState)
 
-        quote = findViewById(R.id.home_quote)
         bottomBar = findViewById(R.id.home_bottom_bar)
+        viewPager2 = findViewById(R.id.home_pager)
+
+        list = arrayListOf(
+            HomeFragment.newInstance(),
+            DocumentsFragment.newInstance(),
+            HistoryFragment.newInstance(),
+            SettingsFragment.newInstance(),
+            InfoFragment.newInstance()
+        )
+
+        viewPager2.adapter = ScreenSlidePagerAdapter(this, list)
 
     }
 
     override fun onResume() {
         super.onResume()
 
-        bottomBar.selectTabById(R.id.tab_home)
-
-        bottomBar.setOnTabSelectListener(object: AnimatedBottomBar.OnTabSelectListener {
-            override fun onTabSelected(
-                lastIndex: Int,
-                lastTab: AnimatedBottomBar.Tab?,
-                newIndex: Int,
-                newTab: AnimatedBottomBar.Tab
-            ) {
-                when(newIndex) {
-                    1 -> goNoTransaction(TestActivity::class.java)
-                    0 -> go(SlidingActivity::class.java)
-                    else -> Toast.makeText(mContext, "TEST", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-
         mContext = this
 
-        val quotes = listOf("Porcodio", "Porcamadonna", "Zio pera", "Scaccia frocio", "Accendiamo i cazzi")
+        bottomBar.selectTabById(R.id.tab_home)
 
-        quote.text = quotes[(quotes.indices).random()]
+        bottomBar.setupWithViewPager2(viewPager2)
 
-        startService(Intent(applicationContext, FetchService::class.java))
+        //TODO: background service or calls -> decide
+        //startService(Intent(applicationContext, FetchService::class.java))
 
     }
 

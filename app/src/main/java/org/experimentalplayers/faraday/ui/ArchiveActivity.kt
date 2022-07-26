@@ -1,12 +1,19 @@
 package org.experimentalplayers.faraday.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.experimentalplayers.faraday.R
 
-class TestActivity : AppCompatActivity() {
+class ArchiveActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        myContentView = R.layout.activity_archive
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
+
     }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
 }
