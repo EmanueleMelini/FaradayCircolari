@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import nl.joery.animatedbottombar.AnimatedBottomBar
 import org.experimentalplayers.faraday.R
-import org.experimentalplayers.faraday.ui.adapter.ScreenSlidePagerAdapter
+import org.experimentalplayers.faraday.ui.adapters.ScreenSlidePagerAdapter
 import org.experimentalplayers.faraday.ui.fragments.*
 
 class HomeActivity : BaseActivity() {
@@ -42,7 +42,7 @@ class HomeActivity : BaseActivity() {
 
         bottomBar.setupWithViewPager2(viewPager2)
 
-        //TODO: background service or calls -> decide
+        //TODO: call backend -> remove background service
         //startService(Intent(applicationContext, FetchService::class.java))
 
     }

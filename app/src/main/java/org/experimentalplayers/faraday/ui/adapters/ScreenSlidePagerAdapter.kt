@@ -1,4 +1,4 @@
-package org.experimentalplayers.faraday.ui.adapter
+package org.experimentalplayers.faraday.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
