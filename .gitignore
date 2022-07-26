@@ -14,6 +14,5 @@
 .cxx
 local.properties
 
-
 .idea
-*.properties
+config.properties
