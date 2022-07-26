@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SlidingFragment4">
+    tools:context=".ui.fragments.HomeFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="wrap_content"
-        android:text="TEST 4" />
+        android:gravity="center"
+        android:text="SCHERMATA HOME" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
