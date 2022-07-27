@@ -16,3 +16,5 @@ local.properties
 
 .idea
 config.properties
+
+google-services.json

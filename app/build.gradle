@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services' //Google services
+apply plugin: 'com.google.firebase.crashlytics' //Crashlytics
+apply plugin: 'com.google.firebase.firebase-perf' //Performance
 
 android {
     namespace 'org.experimentalplayers.faraday'
@@ -33,6 +36,9 @@ android {
 }
 
 dependencies {
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
 
     //AndroidX
     implementation 'androidx.appcompat:appcompat:1.4.2'
