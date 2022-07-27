@@ -8,6 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="colorPrimary">@color/steel_blue</color>
+    <color name="colorPrimaryVariant">@color/steel_blue</color>
+    <color name="colorOnPrimary">@color/white</color>
+
+    <color name="colorSecondary">@color/oxford_blue</color>
+    <color name="colorSecondaryVariant">@color/oxford_blue</color>
+    <color name="colorOnSecondary">@color/white</color>
+
     <color name="steel_blue">#2981D2</color>
     <color name="oxford_blue">#00214B</color>
     <color name="red_pigment">#ED0008</color>

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.FaradayCircolari" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/steel_blue</item>
-        <item name="colorPrimaryVariant">@color/steel_blue</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorOnPrimary</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/oxford_blue</item>
