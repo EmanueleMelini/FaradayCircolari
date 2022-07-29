@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.experimentalplayers.faraday.R
-import org.experimentalplayers.faraday.models.Document
+import org.experimentalplayers.faraday.models.SiteDocument
 
 class HomeAdapter(
     private var mContext: Context,
-    private var list: List<Document>
+    private var list: List<SiteDocument>
 ) : RecyclerView.Adapter<HomeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {

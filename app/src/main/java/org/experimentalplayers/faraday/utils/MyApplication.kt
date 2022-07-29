@@ -28,7 +28,7 @@ class MyApplication : Application() {
         auth.signInAnonymously()
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {
-                    Timber.d("LOGGED-$user-${task.result.user}")
+                    Timber.d("LOGGED-${user?.uid}-${task.result.user?.uid}")
                 } else {
                     Timber.d("NOT LOGGED-$user")
                     task.exception?.printStackTrace()
