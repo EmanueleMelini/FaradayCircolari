@@ -1,9 +1,18 @@
 package org.experimentalplayers.faraday.models
 
+import com.google.firebase.firestore.Exclude
+
 class Attachment() {
-    lateinit var filename: String
-    lateinit var id: String
-    lateinit var size: String
-    lateinit var url: String
-    lateinit var path: String
+
+    var filename: String? = null
+
+    var size: String? = null
+
+    var type: String? = null
+
+    var url: String? = null
+
+    @Exclude
+    var path: String? = null
+
 }

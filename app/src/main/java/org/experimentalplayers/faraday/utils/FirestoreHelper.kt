@@ -1,9 +1,20 @@
 package org.experimentalplayers.faraday.utils
 
+import android.content.Context
+import android.content.SharedPreferences
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.Source
+import org.experimentalplayers.faraday.models.Archive
 import org.experimentalplayers.faraday.models.Attachment
 import org.experimentalplayers.faraday.models.SiteDocument
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.stream.Collectors
+import kotlin.streams.toList
 
 class FirestoreHelper {
 
@@ -15,21 +26,53 @@ class FirestoreHelper {
 
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    fun getDocuments(doWithDocs: (MutableList<SiteDocument>?) -> Unit) {
+    private fun checkCollectionUpdated(collection: CollectionReference): Source {
+        val last = MyApplication.sharedPreferences!!.getString(SHARED_LAST, "") ?: ""
+        return if(last != "") {
+            val sdf = MyApplication.instance!!.simpleDateFormat
+            val lastModified = sdf.parse(last)?.let { Timestamp(it) }
+            if(lastModified != null) {
+                val query = collection.orderBy("lastModified", Query.Direction.DESCENDING)
+                    .whereGreaterThan("lastModified", lastModified)
+                Source.CACHE
+            } else
+                Source.SERVER
+        } else
+            Source.SERVER
 
-        val docs = mutableListOf<SiteDocument>()
+        /*
+            TODO: update shared when new found
+            with(sharedPreferences.edit()) {
+                putString(SHARED_LAST, lastModified ?: "")
+                apply()
+            }
+         */
+    }
 
-        db.collection("documents")
-            .get()
+    fun getDocuments(doWithDocs: (List<SiteDocument>?) -> Unit) {
+
+        var docs: List<SiteDocument> = emptyList()
+
+        val documentsCollection = db.collection(FIREBASE_COLLECTION_DOCUMENTS)
+
+        val src = checkCollectionUpdated(documentsCollection)
+
+        documentsCollection.get(src)
             .addOnSuccessListener {
                 if(!it.isEmpty) {
-                    for(doc in it.documents) {
-                        val d = doc.toObject(SiteDocument::class.java)
-                        if(d != null)
-                            docs.add(d)
-                    }
-                    doWithDocs(docs)
+                    docs = it.documents.stream()
+                        .map { doc ->
+                            doc.toObject(SiteDocument::class.java)
+                        }
+                        .filter { doc ->
+                            doc != null
+                        }
+                        .map { doc ->
+                            doc as SiteDocument
+                        }
+                        .toList()
                 }
+                doWithDocs(docs)
             }
             .addOnFailureListener {
                 it.printStackTrace()
@@ -38,27 +81,67 @@ class FirestoreHelper {
 
     }
 
-    fun getAttachments(doWithAttachs: (MutableList<Attachment>?) -> Unit) {
+    fun getAttachments(doWithAttachs: (List<Attachment>?) -> Unit) {
 
-        val attachs = mutableListOf<Attachment>()
+        val attachmentsCollection = db.collection(FIREBASE_COLLECTION_ATTACHMENTS)
 
-        db.collection("attachments")
-            .get()
+        val src = checkCollectionUpdated(attachmentsCollection)
+
+        var attachs = emptyList<Attachment>()
+
+        attachmentsCollection.get(src)
             .addOnSuccessListener {
-                Timber.d("ATTACHS1-$it")
-                Timber.d("ATTACHS2-${it.documents}")
                 if(!it.isEmpty) {
-                    for(attach in it.documents) {
-                        val a = attach.toObject(Attachment::class.java)
-                        if(a != null)
-                            attachs.add(a)
-                    }
-                    doWithAttachs(attachs)
+                    attachs = it.documents.stream()
+                        .map { attach ->
+                            attach.toObject(Attachment::class.java)
+                        }
+                        .filter { attach ->
+                            attach != null
+                        }
+                        .map { attach ->
+                            attach as Attachment
+                        }
+                        .toList()
                 }
+                doWithAttachs(attachs)
             }
             .addOnFailureListener {
                 it.printStackTrace()
                 doWithAttachs(null)
+            }
+
+    }
+
+    fun getArchive(doWithArchive: (List<Archive>?) -> Unit) {
+
+        val archiveCollection = db.collection(FIREBASE_COLLECTION_ARCHIVE)
+
+        val src = checkCollectionUpdated(archiveCollection)
+
+        var archives = emptyList<Archive>()
+
+        archiveCollection
+            .get(src)
+            .addOnSuccessListener {
+                if(!it.isEmpty) {
+                    archives = it.documents.stream()
+                        .map { archive ->
+                            archive.toObject(Archive::class.java)
+                        }
+                        .filter { archive ->
+                            archive != null
+                        }
+                        .map { archive ->
+                            archive as Archive
+                        }
+                        .toList()
+                }
+                doWithArchive(archives)
+            }
+            .addOnFailureListener {
+                it.printStackTrace()
+                doWithArchive(null)
             }
 
     }

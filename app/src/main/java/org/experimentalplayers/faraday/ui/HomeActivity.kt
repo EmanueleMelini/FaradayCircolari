@@ -38,12 +38,9 @@ class HomeActivity : BaseActivity() {
 
         mContext = this
 
-        bottomBar.selectTabById(R.id.tab_home)
+        //bottomBar.selectTabById(R.id.tab_home)
 
         bottomBar.setupWithViewPager2(viewPager2)
-
-        //TODO: call backend -> remove background service
-        //startService(Intent(applicationContext, FetchService::class.java))
 
     }
 

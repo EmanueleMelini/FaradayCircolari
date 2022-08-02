@@ -32,11 +32,6 @@
         </activity>
 
         <service
-            android:name=".service.FetchService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <service
             android:name=".notification.gms.NotificationService"
             android:exported="false">
             <intent-filter>
