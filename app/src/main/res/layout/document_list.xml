@@ -2,25 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingBottom="60dp"
-    tools:context=".ui.fragments.HomeFragment">
-
-    <include
-        android:id="@+id/home_top"
-        layout="@layout/top"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/home_linear"
+        android:id="@+id/list_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -28,8 +14,8 @@
         android:layout_marginEnd="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/home_recycler_circolari"
-        app:layout_constraintTop_toBottomOf="@id/home_top">
+        app:layout_constraintStart_toStartOf="@id/list_recycler"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -38,11 +24,11 @@
             android:src="@drawable/description" />
 
         <TextView
-            android:id="@+id/home_circolari_text"
+            android:id="@+id/list_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Ultime circolari"
+            android:text="Circolari as roma 1925"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -50,16 +36,17 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_recycler_circolari"
+        android:id="@+id/list_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_linear"
+        app:layout_constraintTop_toBottomOf="@+id/list_linear"
         tools:listitem="@layout/home_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

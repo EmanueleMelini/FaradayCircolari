@@ -5,19 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import go
 import goWithExtras
 import org.experimentalplayers.faraday.R
-import org.experimentalplayers.faraday.models.Archive
+import org.experimentalplayers.faraday.models.ArchiveEntry
 import org.experimentalplayers.faraday.ui.ArchiveActivity
-import org.experimentalplayers.faraday.utils.ARCHIVE_EXTRA
-import timber.log.Timber
+import org.experimentalplayers.faraday.ui.HomeActivity
+import org.experimentalplayers.faraday.ui.fragments.DocumentsFragment
+import org.experimentalplayers.faraday.ui.fragments.InfoFragment
+import org.experimentalplayers.faraday.utils.ARCHIVE_EXTRA_TITLE
+import org.experimentalplayers.faraday.utils.ARCHIVE_EXTRA_TYPE
 
-class DocumentsAdapter(
-    private var mContext: Context,
-    private var list: List<Archive>
-) : RecyclerView.Adapter<DocumentsViewHolder>() {
+class DocumentsAdapter(private val mContext: Context, private val documentsFragment: DocumentsFragment) : ListAdapter<ArchiveEntry, DocumentsAdapter.DocumentsViewHolder>(DocumentsDiffCallback()) {
+
+    class DocumentsDiffCallback : DiffUtil.ItemCallback<ArchiveEntry>() {
+        override fun areItemsTheSame(oldItem: ArchiveEntry, newItem: ArchiveEntry): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: ArchiveEntry, newItem: ArchiveEntry): Boolean {
+            return oldItem == newItem
+        }
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocumentsViewHolder {
         return DocumentsViewHolder(LayoutInflater.from(mContext).inflate(R.layout.documents_item, parent, false))
@@ -25,31 +37,37 @@ class DocumentsAdapter(
 
     override fun onBindViewHolder(holder: DocumentsViewHolder, position: Int) {
 
-        val item = list[position]
+        val item = getItem(position)
 
         holder.title.text = item.id
 
         holder.itemView.setOnClickListener {
-            val extras: MutableMap<String, String> = mutableMapOf()
+            val extras: MutableMap<String, Any> = mutableMapOf()
             item.schoolYear?.let {
-                extras.put(ARCHIVE_EXTRA, it)
+                extras.put(ARCHIVE_EXTRA_TITLE, it)
             }
-            Timber.d("SY1-$item.schoolYear")
-            mContext.goWithExtras(ArchiveActivity::class.java, extras)
+            item.type?.let {
+                extras.put(ARCHIVE_EXTRA_TYPE, it)
+            }
+
+            if(item.schoolYear != null && item.type != null)
+                documentsFragment.seeDocuments(item.schoolYear!!, item.type!!)
+
+            //mContext.goWithExtras(ArchiveActivity::class.java, extras)
         }
 
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = currentList.size
 
-}
 
-class DocumentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class DocumentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    var title: TextView
+        var title: TextView
 
-    init {
-        title = itemView.findViewById(R.id.documents_item_text)
+        init {
+            title = itemView.findViewById(R.id.documents_item_text)
+        }
+
     }
-
 }

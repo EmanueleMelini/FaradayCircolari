@@ -1,62 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="100dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="60dp"
+    android:background="@color/white"
     tools:context=".ui.fragments.DocumentsFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <include
+        android:id="@+id/documents_top"
+        layout="@layout/top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/documents_circolari_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Circolari"
-            app:layout_constraintStart_toStartOf="@id/documents_recycler_circolari"
-            app:layout_constraintTop_toTopOf="parent" />
+    <include
+        layout="@layout/document_list"
+        android:id="@+id/document_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/documents_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/documents_recycler_circolari"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/documents_circolari_text"
-            tools:listitem="@layout/documents_item" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/documents_recycler_archive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/documents_top"
+        tools:listitem="@layout/documents_item" />
 
-        <TextView
-            android:id="@+id/documents_avvisi_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Avvisi"
-            app:layout_constraintStart_toStartOf="@id/documents_recycler_avvisi"
-            app:layout_constraintTop_toBottomOf="@+id/documents_recycler_circolari" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/documents_recycler_avvisi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/documents_avvisi_text"
-            tools:listitem="@layout/documents_item" />
-
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,8 @@
     <string name="history">Storico</string>
     <string name="settings">Impostazioni</string>
     <string name="info">Info</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="conn_error_text">Errore nella chiamata, riprovare pià tardi</string>
+    <string name="empty_docs">Nessuna circolare/avviso trovata</string>
+    <string name="empty_archive">Nessun anno trovato</string>
 </resources>

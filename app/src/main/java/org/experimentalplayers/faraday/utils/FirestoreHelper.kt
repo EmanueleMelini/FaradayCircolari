@@ -1,19 +1,14 @@
 package org.experimentalplayers.faraday.utils
 
-import android.content.Context
-import android.content.SharedPreferences
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.Source
-import org.experimentalplayers.faraday.models.Archive
-import org.experimentalplayers.faraday.models.Attachment
+import org.experimentalplayers.faraday.models.ArchiveEntry
 import org.experimentalplayers.faraday.models.SiteDocument
 import timber.log.Timber
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.stream.Collectors
 import kotlin.streams.toList
 
 class FirestoreHelper {
@@ -26,27 +21,50 @@ class FirestoreHelper {
 
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    private fun checkCollectionUpdated(collection: CollectionReference): Source {
-        val last = MyApplication.sharedPreferences!!.getString(SHARED_LAST, "") ?: ""
-        return if(last != "") {
+    private fun checkCollectionUpdated(collection: CollectionReference, sharedString: String): Source {
+        val sharedLast = MyApplication.sharedPreferences!!.getString(sharedString, null)
+        sharedLast?.let { last ->
             val sdf = MyApplication.instance!!.simpleDateFormat
             val lastModified = sdf.parse(last)?.let { Timestamp(it) }
-            if(lastModified != null) {
-                val query = collection.orderBy("lastModified", Query.Direction.DESCENDING)
-                    .whereGreaterThan("lastModified", lastModified)
-                Source.CACHE
-            } else
-                Source.SERVER
-        } else
-            Source.SERVER
 
-        /*
-            TODO: update shared when new found
-            with(sharedPreferences.edit()) {
-                putString(SHARED_LAST, lastModified ?: "")
-                apply()
+            if(lastModified != null) {
+                collection.orderBy("lastModified", Query.Direction.DESCENDING)
+                    .whereGreaterThan("lastModified", lastModified)
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        if(!querySnapshot.isEmpty) {
+                            var updateLast: Timestamp? = null
+                            querySnapshot.documents.toList().let { list ->
+                                if(list.size == 1)
+                                    updateLast = list[0].get("lastModified") as Timestamp?
+                            }
+
+                            updateLast?.let { update ->
+                                updateLastModified(update, sharedString)
+                            }
+
+                        }
+                    }
+                    .addOnFailureListener {
+                        it.printStackTrace()
+                    }
+                return Source.CACHE
+            } else {
+                updateLastModified(Timestamp.now(), sharedString)
+                return Source.SERVER
             }
-         */
+        }
+        updateLastModified(Timestamp.now(), sharedString)
+        return Source.SERVER
+    }
+
+    private fun updateLastModified(lastModified: Timestamp, sharedString: String) {
+        Timber.d("UPDATELAST-$lastModified")
+        with(MyApplication.sharedPreferences!!.edit()) {
+            putString(sharedString, MyApplication.instance!!.simpleDateFormat.format(Date(lastModified.seconds * 1000)) ?: "")
+            apply()
+        }
     }
 
     fun getDocuments(doWithDocs: (List<SiteDocument>?) -> Unit) {
@@ -55,9 +73,13 @@ class FirestoreHelper {
 
         val documentsCollection = db.collection(FIREBASE_COLLECTION_DOCUMENTS)
 
-        val src = checkCollectionUpdated(documentsCollection)
+        val src = checkCollectionUpdated(documentsCollection, SHARED_LAST_DOCUMENTS)
+        Timber.d("SOURCED-$src")
 
-        documentsCollection.get(src)
+        documentsCollection
+            .orderBy("articleId", Query.Direction.DESCENDING)
+            .limit(10)
+            .get(src)
             .addOnSuccessListener {
                 if(!it.isEmpty) {
                     docs = it.documents.stream()
@@ -81,63 +103,32 @@ class FirestoreHelper {
 
     }
 
-    fun getAttachments(doWithAttachs: (List<Attachment>?) -> Unit) {
-
-        val attachmentsCollection = db.collection(FIREBASE_COLLECTION_ATTACHMENTS)
-
-        val src = checkCollectionUpdated(attachmentsCollection)
-
-        var attachs = emptyList<Attachment>()
-
-        attachmentsCollection.get(src)
-            .addOnSuccessListener {
-                if(!it.isEmpty) {
-                    attachs = it.documents.stream()
-                        .map { attach ->
-                            attach.toObject(Attachment::class.java)
-                        }
-                        .filter { attach ->
-                            attach != null
-                        }
-                        .map { attach ->
-                            attach as Attachment
-                        }
-                        .toList()
-                }
-                doWithAttachs(attachs)
-            }
-            .addOnFailureListener {
-                it.printStackTrace()
-                doWithAttachs(null)
-            }
-
-    }
-
-    fun getArchive(doWithArchive: (List<Archive>?) -> Unit) {
+    fun getArchive(doWithArchive: (List<ArchiveEntry>?) -> Unit) {
 
         val archiveCollection = db.collection(FIREBASE_COLLECTION_ARCHIVE)
 
-        val src = checkCollectionUpdated(archiveCollection)
+        val src = checkCollectionUpdated(archiveCollection, SHARED_LAST_ARCHIVE)
+        Timber.d("SOURCEA-$src")
 
-        var archives = emptyList<Archive>()
+        var archiveEntries = emptyList<ArchiveEntry>()
 
         archiveCollection
             .get(src)
             .addOnSuccessListener {
                 if(!it.isEmpty) {
-                    archives = it.documents.stream()
+                    archiveEntries = it.documents.stream()
                         .map { archive ->
-                            archive.toObject(Archive::class.java)
+                            archive.toObject(ArchiveEntry::class.java)
                         }
                         .filter { archive ->
                             archive != null
                         }
                         .map { archive ->
-                            archive as Archive
+                            archive as ArchiveEntry
                         }
                         .toList()
                 }
-                doWithArchive(archives)
+                doWithArchive(archiveEntries)
             }
             .addOnFailureListener {
                 it.printStackTrace()

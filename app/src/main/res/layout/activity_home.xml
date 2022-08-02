@@ -19,6 +19,7 @@
         app:abb_indicatorHeight="4dp"
         app:abb_indicatorMargin="16dp"
         app:abb_selectedIndex="1"
+        android:background="@color/oxford_blue"
         app:abb_selectedTabType="text"
         app:abb_tabs="@menu/tabs"
         app:layout_constraintBottom_toBottomOf="parent"
