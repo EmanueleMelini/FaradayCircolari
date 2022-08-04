@@ -2,7 +2,7 @@ package org.experimentalplayers.faraday.models
 
 import com.google.firebase.firestore.DocumentId
 
-class ArchiveEntry {
+class ArchiveEntry : java.io.Serializable {
 
     @DocumentId
     var id: String? = null

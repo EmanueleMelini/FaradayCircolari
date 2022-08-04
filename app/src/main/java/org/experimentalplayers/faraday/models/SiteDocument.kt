@@ -3,7 +3,7 @@ package org.experimentalplayers.faraday.models
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 
-class SiteDocument() {
+class SiteDocument : java.io.Serializable {
 
     var articleId: Int = 0
 

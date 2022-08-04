@@ -8,13 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import goWithExtras
 import org.experimentalplayers.faraday.R
 import org.experimentalplayers.faraday.models.ArchiveEntry
-import org.experimentalplayers.faraday.ui.ArchiveActivity
-import org.experimentalplayers.faraday.ui.HomeActivity
 import org.experimentalplayers.faraday.ui.fragments.DocumentsFragment
-import org.experimentalplayers.faraday.ui.fragments.InfoFragment
 import org.experimentalplayers.faraday.utils.ARCHIVE_EXTRA_TITLE
 import org.experimentalplayers.faraday.utils.ARCHIVE_EXTRA_TYPE
 

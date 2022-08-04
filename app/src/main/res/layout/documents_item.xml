@@ -27,17 +27,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="20sp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="Anno cazzo culo pisnelo 2022"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

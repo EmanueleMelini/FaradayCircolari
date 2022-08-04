@@ -67,7 +67,7 @@ class FirestoreHelper {
         }
     }
 
-    fun getDocuments(doWithDocs: (List<SiteDocument>?) -> Unit) {
+    fun getDocuments(limit: Long, doWithDocs: (List<SiteDocument>?) -> Unit) {
 
         var docs: List<SiteDocument> = emptyList()
 
@@ -78,20 +78,17 @@ class FirestoreHelper {
 
         documentsCollection
             .orderBy("articleId", Query.Direction.DESCENDING)
-            .limit(10)
+            .apply {
+                if(limit != -1L)
+                    this.limit(limit)
+            }
             .get(src)
             .addOnSuccessListener {
                 if(!it.isEmpty) {
                     docs = it.documents.stream()
-                        .map { doc ->
-                            doc.toObject(SiteDocument::class.java)
-                        }
-                        .filter { doc ->
-                            doc != null
-                        }
-                        .map { doc ->
-                            doc as SiteDocument
-                        }
+                        .map { doc -> doc.toObject(SiteDocument::class.java) }
+                        .filter { doc -> doc != null }
+                        .map { doc -> doc as SiteDocument }
                         .toList()
                 }
                 doWithDocs(docs)
@@ -113,19 +110,14 @@ class FirestoreHelper {
         var archiveEntries = emptyList<ArchiveEntry>()
 
         archiveCollection
+            .orderBy("startYear", Query.Direction.DESCENDING)
             .get(src)
             .addOnSuccessListener {
                 if(!it.isEmpty) {
                     archiveEntries = it.documents.stream()
-                        .map { archive ->
-                            archive.toObject(ArchiveEntry::class.java)
-                        }
-                        .filter { archive ->
-                            archive != null
-                        }
-                        .map { archive ->
-                            archive as ArchiveEntry
-                        }
+                        .map { archiveEntry -> archiveEntry.toObject(ArchiveEntry::class.java) }
+                        .filter { archive -> archive != null }
+                        .map { archiveEntry -> archiveEntry as ArchiveEntry }
                         .toList()
                 }
                 doWithArchive(archiveEntries)

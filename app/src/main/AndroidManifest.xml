@@ -14,9 +14,6 @@
         android:theme="@style/Theme.FaradayCircolari"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ArchiveActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.HomeActivity"
             android:exported="true">
             <intent-filter>

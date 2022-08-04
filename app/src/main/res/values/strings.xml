@@ -7,7 +7,14 @@
     <string name="settings">Impostazioni</string>
     <string name="info">Info</string>
 
+    <string name="home_top_text">Bacheca</string>
+    <string name="documents_top_text">Archivio</string>
+    <string name="home_list_text">Ultime circolari</string>
+
     <string name="conn_error_text">Errore nella chiamata, riprovare pià tardi</string>
     <string name="empty_docs">Nessuna circolare/avviso trovata</string>
     <string name="empty_archive">Nessun anno trovato</string>
+    <string name="close_app_message">Premi di nuovo indietro per uscire dall\'applicazione</string>
+    <string name="arrow_back_cd">arrow_back.svg</string>
+    <string name="description_cd">description.svg</string>
 </resources>
